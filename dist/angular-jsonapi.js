@@ -170,7 +170,7 @@
             url: 'https://status.cloud.google.com/incidents.schema.json'
           }).then(rejectServerOffline, rejectNoConnection);
         } else {
-          deferred.reject(AngularJsonAPIModelSourceError.create(response.statusText, _this, response.status, action, response));
+          deferred.reject(AngularJsonAPIModelSourceError.create(response.statusText, _this, response.status, action, response.data));
         }
 
         return deferred.promise;
@@ -2185,11 +2185,11 @@
       create: SourceErrorFactory
     };
 
-    function SourceErrorFactory(message, source, code, action, response) {
-      return new SourceError(message, source, code, action, response);
+    function SourceErrorFactory(message, source, code, action, response_data) {
+      return new SourceError(message, source, code, action, response_data);
     }
 
-    function SourceError(message, source, code, action, response) {
+    function SourceError(message, source, code, action, response_data) {
       var _this = this;
 
       _this.message = message;
@@ -2197,7 +2197,7 @@
         source: source,
         code: code,
         action: action,
-        response: response
+        response: response_data
       };
     }
   }
